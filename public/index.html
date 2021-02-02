@@ -19,7 +19,8 @@
 
             navigator.getMedia({video: true},
                 (stream)=>{
-                    preview.src = window.URL.createObjectURL(stream);
+                    console.log(stream);
+                    preview.src = stream.url;
                 },
                 (error) => console.error(error));
  
