@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Vivian</title>
+    </head>
+    <body>
+        <video id="preview"></video>
+        <br/>
+        <canvas id="canvas" style="display: none; width: 512px; height: 512px;"></canvas>
+        <br/>
+        <button onclick="tirarFoto()" style="width: 100%; height: 200px; border: 1px solid white; background-color: #232323;">Tirar</button>
+        
+        <script>
+            const preview = document.getElementById("preview");
+            const canvas = document.getElementById("canvas");
+            navigator.getMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+
+            navigator.getMedia({video: true},
+                (stream)=>{
+                    preview.src = window.URL.createObjectURL(stream);
+                },
+                (error) => console.error(error));
+ 
+            function tirarFoto(){
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+                const dataURL = canvas.toDataURL('image/jpeg');
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(xhttp.responseText);
+                    }
+                };
+                xhttp.open("POST", "/upload", true);
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhttp.send("file="+encodeURIComponent(dataURL));
+            }
+        </script>
+    </body>
+</html>
