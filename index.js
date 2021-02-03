@@ -34,6 +34,7 @@ app.route('/upload')
                     .then(function(response) {
                         console.log("Text Extracted");
                         const texts = textTypes(predictedText(response.get()));
+                        console.log(texts);
                         console.log("Searching the answer in Brainly...");
                         BrainlyAPI.startWorker({ experimental: true, server: Server.PT }, async brainly => {
                             console.log("Answer is ready!");
