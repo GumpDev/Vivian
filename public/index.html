@@ -3,35 +3,28 @@
         <title>Vivian</title>
     </head>
     <body>
-        <video id="preview"></video>
+        <video autoplay id="preview" width="640" height="480"></video>
         <br/>
-        <canvas id="canvas" style="display: none; width: 512px; height: 512px;"></canvas>
+        <canvas id="canvas" style="display: none;"></canvas>
         <br/>
-        <button onclick="tirarFoto()" style="width: 100%; height: 200px; border: 1px solid white; background-color: #232323;">Tirar</button>
-        
+        <button onclick="tirarFoto()" style="width: 100%; height: 200px; border: 1px solid white; background-color: #232323; color: white">Tirar</button>
+        <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
         <script>
             const preview = document.getElementById("preview");
             const canvas = document.getElementById("canvas");
+            let webcam = null; 
             navigator.getMedia = ( navigator.getUserMedia ||
                        navigator.webkitGetUserMedia ||
                        navigator.mozGetUserMedia ||
                        navigator.msGetUserMedia);
 
             document.onload = () =>{
-                if (navigator.getMedia) {
-                    navigator.getMedia({ video: true })
-                        .then(function (stream) {
-                            preview.srcObject = stream;
-                        })
-                        .catch(function (err0r) {
-                            console.error(err0r);
-                        });
-                }
+                webcam = new Webcam(preview, 'user', canvas, null);
+                webcam.start();
             }
  
             function tirarFoto(){
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+                webcam.snap();
                 const dataURL = canvas.toDataURL('image/jpeg');
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
