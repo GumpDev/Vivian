@@ -13,12 +13,8 @@
             const preview = document.getElementById("preview");
             const canvas = document.getElementById("canvas");
             let webcam = null; 
-            navigator.getMedia = ( navigator.getUserMedia ||
-                       navigator.webkitGetUserMedia ||
-                       navigator.mozGetUserMedia ||
-                       navigator.msGetUserMedia);
-
-            document.onload = () =>{
+            
+            window.onload = () =>{
                 webcam = new Webcam(preview, 'user', canvas, null);
                 webcam.start();
             }
