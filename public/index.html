@@ -19,7 +19,7 @@
 
             document.onload = () =>{
                 if (navigator.getMedia) {
-                    navigator.getMedia.getUserMedia({ video: true })
+                    navigator.getMedia({ video: true })
                         .then(function (stream) {
                             preview.srcObject = stream;
                         })
