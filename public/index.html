@@ -19,7 +19,11 @@
             }
  
             function tirarFoto(){
-                webcam.snap();
+                const ctx = canvas.getContext("2d");
+                canvas.width = preview.srcObject.getVideoTracks()[0].getSettings().width;
+                canvas.height = preview.srcObject.getVideoTracks()[0].getSettings().height;
+                ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+                
                 const dataURL = canvas.toDataURL('image/jpeg');
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
