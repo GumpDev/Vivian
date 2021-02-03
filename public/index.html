@@ -17,12 +17,17 @@
                        navigator.mozGetUserMedia ||
                        navigator.msGetUserMedia);
 
-            navigator.getMedia({video: true},
-                (stream)=>{
-                    console.log(stream);
-                    preview.srcObject = stream;
-                },
-                (error) => console.error(error));
+            document.onload = () =>{
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function (stream) {
+                            preview.srcObject = stream;
+                        })
+                        .catch(function (err0r) {
+                            console.error(err0r);
+                        });
+                }
+            }
  
             function tirarFoto(){
                 var ctx = canvas.getContext('2d');
